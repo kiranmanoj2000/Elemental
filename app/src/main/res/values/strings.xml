@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Elemental</string>
+    <string name="edit_message">Element</string>
+    <string name="button_send">Discover</string>
+</resources>
