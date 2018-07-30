@@ -1,9 +1,12 @@
 package com.example.myfirstapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -18,10 +21,19 @@ private long time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // remove title bar
+        // hide status bar
+        //Remove title bar
+
+
+//Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_display_message);
 
         // if dark mode is enabled
-        if(MainActivity.darkMode){
+          if(MainActivity.darkMode){
             // set dark background
             getWindow().getDecorView().setBackgroundColor(Color.rgb(49,50,51));
             // identify text view to set white font
@@ -102,12 +114,12 @@ private long time;
                 toggleBP.setTextOn("Boiling Point");
                 toggleBP.setTextOff("Boiling Point");
 
-                // intiialize toggle button for electronegativity
+                // initialize toggle button for electronegativity
                 ToggleButton toggleElectro = (ToggleButton)findViewById(R.id.toggleButton7);
                 // lock electronegativity
                 toggleElectro.setText("Electronegativity");
-                toggleElectro.setText("Electronegativity");
-                toggleElectro.setText("Electronegativity");
+                toggleElectro.setTextOn("Electronegativity");
+                toggleElectro.setTextOff("Electronegativity");
 
             }
             // valid element is listed
