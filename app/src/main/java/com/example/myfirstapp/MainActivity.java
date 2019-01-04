@@ -1,11 +1,16 @@
 package com.example.myfirstapp;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,12 +31,21 @@ public class MainActivity extends AppCompatActivity {
     public final static double[] electronegativity = new double[109];
     public static boolean darkMode;
     ImageButton androidImageButton;
+    private AutoCompleteTextView autoElement;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        // remove title bar
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+//Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // hide status bar
+
+        setContentView(R.layout.activity_main);
         setTitle("Elemental");
         molarMass[0] = 1.0079;
         molarMass[1] = 4.0026;
@@ -162,8 +176,8 @@ public class MainActivity extends AppCompatActivity {
         elementName[14] = "Phosphorus";
         elementName[15] = "Sulfur";
         elementName[16] = "Chlorine";
-        elementName[17] = "Potassium";
-        elementName[18] = "Argon";
+        elementName[17] = "Argon";
+        elementName[18] = "Potassium";
         elementName[19] = "Calcium";
         elementName[20] = "Scandium";
         elementName[21] = "Titanium";
@@ -808,6 +822,10 @@ public class MainActivity extends AppCompatActivity {
         electronegativity[106]= 0.00;
         electronegativity[107]= 0.00;
         electronegativity[108]= 0.00;
+        // initialize the AutocCompleteView
+        autoElement = (AutoCompleteTextView)findViewById(R.id.autoElement);
+        ArrayAdapter<String> elementsAuto = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, elementName);
+        autoElement.setAdapter(elementsAuto);
 
         // identify the gif viewer
         final GifImageView gif = (GifImageView)findViewById(R.id.GIF);
@@ -821,11 +839,10 @@ public class MainActivity extends AppCompatActivity {
                     // set dark background
                     getWindow().getDecorView().setBackgroundColor(Color.rgb(49,50,51));
                     // identify text view to set white font
-                    EditText edit = (EditText) findViewById(R.id.editText);
                     // set white text
-                    edit.setTextColor(Color.WHITE);
+                    autoElement.setTextColor(Color.WHITE);
                     // set hint to white
-                    edit.setHintTextColor(Color.rgb(132,132,127));
+                    autoElement.setHintTextColor(Color.rgb(132,132,127));
 
                     // save the darkened state
                     darkMode = true;
@@ -840,11 +857,10 @@ public class MainActivity extends AppCompatActivity {
                     // leave it as white
                     getWindow().getDecorView().setBackgroundColor(Color.WHITE);
                     // identify text view to set black font
-                    EditText edit = (EditText) findViewById(R.id.editText);
                     // set black text
-                    edit.setTextColor(Color.rgb(0,0,0));
+                    autoElement.setTextColor(Color.rgb(0,0,0));
                     // set hint to gray
-                    edit.setHintTextColor(Color.rgb(170,169,157));
+                    autoElement.setHintTextColor(Color.rgb(170,169,157));
                     // its not in dark mode
                     darkMode = false;
 
@@ -871,8 +887,7 @@ public class MainActivity extends AppCompatActivity {
     public void sendMessage(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.editText);
-        String message = editText.getText().toString();
+        String message = autoElement.getText().toString();
 
             intent.putExtra(EXTRA_MESSAGE, message);
             startActivity(intent);
